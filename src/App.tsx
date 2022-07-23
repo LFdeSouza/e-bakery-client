@@ -1,6 +1,11 @@
+import Navbar from "./components/shared/Navbar";
+
 function App() {
   return (
-    <h1 className="text-red-500 font-bold text-3xl">Hello world</h1>
+    <>
+      <Navbar user="John Doe" />
+      <h1 className="font-bold text-red-500">Hello world</h1>
+    </>
   );
 }
 
