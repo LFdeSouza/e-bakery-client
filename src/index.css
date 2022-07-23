@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .iconFill {
+        @apply fill-gray-400 hover:fill-gray-900
+    }
+}

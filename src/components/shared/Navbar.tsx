@@ -16,7 +16,7 @@ const Navbar: React.FC<Props> = ({ user = "John Doe" }) => {
   const [openLogout, setOpenLogout] = useState(false);
 
   return (
-    <header className="flex items-center justify-between p-4 border-gray-200 md:mx-10 md:max-w-7xl md:border-b">
+    <header className="flex items-center justify-between p-4 border-gray-200 md:mx-auto md:max-w-7xl md:border-b">
       <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
       <div className="flex gap-6">
