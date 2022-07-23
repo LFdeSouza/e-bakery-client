@@ -1,11 +1,23 @@
+import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import Header from "./components/shared/Header";
 import Footer from "./components/shared/Footer";
-import Navbar from "./components/shared/Navbar";
-
+import Home from "./components/home/Home";
+import data from "./data/data.json";
+import { Product } from "./types/Product";
 function App() {
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    setProducts(data.products);
+  }, []);
+
   return (
     <>
-      <Navbar user="John Doe" />
-      <h1 className="font-bold text-red-500">Hello world</h1>
+      <Header user="John Doe" />
+      <Routes>
+        <Route path="/" element={<Home products={products} />} />
+      </Routes>
       <Footer />
     </>
   );

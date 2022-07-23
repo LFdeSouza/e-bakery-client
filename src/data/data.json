@@ -1,0 +1,116 @@
+{
+  "products": [
+    {
+      "name": "Almond Croissants",
+      "url": "../../assets/images/almond_croassant.jpg",
+      "price": 5.50,
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, facilis. Magni debitis dolorem quidem nisi minus, iusto vitae incidunt inventore.",
+      "category": "pastry"
+    },
+    {
+      "name": "Blueberry pie",
+      "url": "../../assets/images/almond_croassant.jpg",
+      "price": 12.99,
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, facilis. Magni debitis dolorem quidem nisi minus, iusto vitae incidunt inventore.",
+      "category": "pastry"
+    },
+    {
+      "name": "Chocolate cake",
+      "url": "../../assets/images/chocolate_cake.jpg",
+      "price": 14.50,
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, facilis. Magni debitis dolorem quidem nisi minus, iusto vitae incidunt inventore.",
+      "category": "bakery"
+    },
+    {
+      "name": "Cinnamon buns",
+      "url": "../../assets/images/cinnamon_bun.jpg",
+      "price": 4.50,
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, facilis. Magni debitis dolorem quidem nisi minus, iusto vitae incidunt inventore.",
+      "category": "pastry"
+    },
+    {
+      "name": "Traditional croassant",
+      "url": "../../assets/images/croassant.jpg",
+      "price": 12.99,
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, facilis. Magni debitis dolorem quidem nisi minus, iusto vitae incidunt inventore.",
+      "category": "pastry"
+    },
+    {
+      "name": "Chocolate cupcake",
+      "url": "../../assets/images/cupcake 2.jpg",
+      "price": 5.50,
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, facilis. Magni debitis dolorem quidem nisi minus, iusto vitae incidunt inventore.",
+      "category": "bakery"
+    },
+    {
+      "name": "Chocolate macarrons",
+      "url": "../../assets/images/macarron.jpg",
+      "price": 2.50,
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, facilis. Magni debitis dolorem quidem nisi minus, iusto vitae incidunt inventore.",
+      "category": "bakery"
+    },
+    {
+      "name": "Apple pie",
+      "url": "../../assets/images/apple_pie.jpg",
+      "price": 10.50,
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, facilis. Magni debitis dolorem quidem nisi minus, iusto vitae incidunt inventore.",
+      "category": "pastry"
+    },
+    {
+      "name": "Baguette",
+      "url": "../../assets/images/french_bagette.jpg",
+      "price": 6.99,
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, facilis. Magni debitis dolorem quidem nisi minus, iusto vitae incidunt inventore.",
+      "category": "bakery"
+    },
+    {
+      "name": "Itallian bread",
+      "url": "../../assets/images/Italian_bread.jpg",
+      "price": 5.50,
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, facilis. Magni debitis dolorem quidem nisi minus, iusto vitae incidunt inventore.",
+      "category": "bakery"
+    },
+    {
+      "name": "Potato bread",
+      "url": "../../assets/images/potato_bread.jpg",
+      "price": 8.00,
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, facilis. Magni debitis dolorem quidem nisi minus, iusto vitae incidunt inventore.",
+      "category": "bakery"
+    },
+    {
+      "name": "Sourdough bread with linseed and sunflower seeds ",
+      "url": "../../assets/images/sourbread_seeds.jpg",
+      "price": 15.50,
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, facilis. Magni debitis dolorem quidem nisi minus, iusto vitae incidunt inventore.",
+      "category": "bakery"
+    },
+    {
+      "name": "Sweet bread ",
+      "url": "../../assets/images/sweet_bread.jpg",
+      "price": 12.50,
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, facilis. Magni debitis dolorem quidem nisi minus, iusto vitae incidunt inventore.",
+      "category": "bakery"
+    },
+    {
+      "name": "Traditional sourdough ",
+      "url": "../../assets/images/traditional_sourdough.jpg",
+      "price": 15.00,
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, facilis. Magni debitis dolorem quidem nisi minus, iusto vitae incidunt inventore.",
+      "category": "bakery"
+    },
+    {
+      "name": "White bread with flax seeds ",
+      "url": "../../assets/images/white_linseed.jpg",
+      "price": 15.00,
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, facilis. Magni debitis dolorem quidem nisi minus, iusto vitae incidunt inventore.",
+      "category": "bakery"
+    },
+    {
+      "name": "Whole grain sourdough",
+      "url": "../../assets/images/whole_grain.jpg",
+      "price": 15.00,
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, facilis. Magni debitis dolorem quidem nisi minus, iusto vitae incidunt inventore.",
+      "category": "bakery"
+    }
+  ]
+}
