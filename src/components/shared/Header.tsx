@@ -26,6 +26,7 @@ const Header: React.FC<Props> = ({ user = "John Doe" }) => {
           <a href="/" className="text-3xl font-semibold text-gray-800">
             Bakery
           </a>
+          <Links location="navbar" />
         </div>
         <div className="flex items-center gap-4 text-gray-800">
           <div className="relative">
@@ -47,6 +48,31 @@ const Header: React.FC<Props> = ({ user = "John Doe" }) => {
   );
 };
 
+const Links = ({ location }: { location: string }) => (
+  <ul
+    className={`gap-4 text-gray-500 ${
+      location === "sidebar"
+        ? "mt-10 flex flex-col text-lg font-semibold"
+        : " hidden justify-center sm:flex sm:items-end"
+    }`}
+  >
+    <li className="cursor-pointer hover:underline">
+      <a href="/">Our products</a>
+    </li>
+    <li className="cursor-pointer hover:underline">
+      <a href="/">Breads</a>
+    </li>
+    <li className="cursor-pointer hover:underline">
+      <a href="/">Sweets</a>
+    </li>
+    <li className="cursor-pointer hover:underline">
+      <a href="/">About</a>
+    </li>
+    <li className="cursor-pointer hover:underline">
+      <a href="/">Contact us</a>
+    </li>
+  </ul>
+);
 const LogoutMenu = () => (
   <div className="absolute left-0 p-4 px-8 bg-white rounded shadow-lg top-12">
     <p className="hover:underline ">Logout</p>
@@ -69,23 +95,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen, toggleSidebar }) => (
         onClick={() => toggleSidebar(!isSidebarOpen)}
         className="w-8 h-8 text-gray-500 cursor-pointer"
       />
-      <ul className="flex flex-col gap-4 mt-10 text-gray-600">
-        <li className="text-lg font-semibold cursor-pointer">
-          <a href="/">Our products</a>
-        </li>
-        <li className="text-lg font-semibold cursor-pointer">
-          <a href="/">Breads</a>
-        </li>
-        <li className="text-lg font-semibold cursor-pointer">
-          <a href="/">Sweets</a>
-        </li>
-        <li className="text-lg font-semibold cursor-pointer">
-          <a href="/">About</a>
-        </li>
-        <li className="text-lg font-semibold cursor-pointer">
-          <a href="/">Contact us</a>
-        </li>
-      </ul>
+      <Links location="sidebar" />
     </nav>
   </>
 );

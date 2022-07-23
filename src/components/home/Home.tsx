@@ -30,12 +30,14 @@ const Home: React.FC<Props> = ({ products }) => {
           </div>
         </div>
       </section>
-      <section className="flex flex-col items-center w-full p-10 mx-auto">
+      <section className="flex flex-col items-center w-full p-10 mx-auto mt-10">
         <h2 className="mb-4 text-4xl text-center text-gray-900 sm:text-5xl">
           Suggestions for the day
         </h2>
-        <div>
-          <SuggestionBox product={products[5]} />
+        <div className="flex-wrap items-center justify-center sm:flex lg:flex-nowrap">
+          {products.map(
+            (product, index) => index < 4 && <SuggestionBox product={product} />
+          )}
         </div>
       </section>
     </main>

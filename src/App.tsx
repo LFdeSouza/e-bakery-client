@@ -3,13 +3,18 @@ import { Route, Routes } from "react-router-dom";
 import Header from "./components/shared/Header";
 import Footer from "./components/shared/Footer";
 import Home from "./components/home/Home";
-import data from "./data/data.json";
 import { Product } from "./types/Product";
+
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
 
+  const fetchProducts = async () => {
+    const res = await fetch("http://localhost:3000/products");
+    const data = await res.json();
+    setProducts(data);
+  };
   useEffect(() => {
-    setProducts(data.products);
+    fetchProducts();
   }, []);
 
   return (

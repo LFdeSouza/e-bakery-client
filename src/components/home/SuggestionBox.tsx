@@ -5,20 +5,19 @@ interface Props {
   product: Product;
 }
 const SuggestionBox: React.FC<Props> = ({ product }) => {
-  const image =
-    "https://images.unsplash.com/photo-1599819055803-717bba43890f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80";
+  console.log(product.url);
   return (
     <div className="p-4 ">
       <div className="relative group">
-        <div className="overflow-hidden rounded-lg h-80 w-72">
+        <div className="w-full overflow-hidden rounded-lg h-80 ">
           <img
             className="object-cover w-full h-full transition-transform duration-500 cursor-pointer hover:scale-125"
-            src={image}
-            alt=";dlisaf"
+            src={require(`../../assets/images/almond_croassant.jpg`)}
+            alt={product.name}
           />
         </div>
-        <p className="invisible absolute left-16 bottom-5  rounded-lg bg-white/60 p-1.5 px-4 group-hover:visible">
-          Name of the product
+        <p className="rounded-lg bg-white/60 p-1.5 px-4 text-center text-gray-700 group-hover:visible  sm:invisible sm:absolute sm:left-16 sm:bottom-5 sm:text-gray-900">
+          {product.name}
         </p>
       </div>
     </div>
