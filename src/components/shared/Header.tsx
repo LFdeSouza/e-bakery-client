@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { MenuIcon, ShoppingCartIcon, XIcon } from "@heroicons/react/outline";
-import img from "../../assets/images/image-avatar.png";
+import img from "../../assets/images2/image-avatar.png";
 
 interface Props {
   user: string;

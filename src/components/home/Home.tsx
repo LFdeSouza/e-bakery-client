@@ -1,4 +1,5 @@
-import img from "../../assets/images/sorted_breads.jpg";
+import { useEffect, useState } from "react";
+import img from "../../assets/images2/mixed_breads.jpg";
 import { Product } from "../../types/Product";
 import SuggestionBox from "./SuggestionBox";
 
@@ -7,6 +8,23 @@ interface Props {
 }
 
 const Home: React.FC<Props> = ({ products }) => {
+  const [suggested, setSuggested] = useState<number[]>([]);
+
+  useEffect(() => {
+    setSuggested(generateRandomArr());
+  }, []);
+
+  const generateRandomArr = (): number[] => {
+    const arr: number[] = [];
+    while (arr.length < 4) {
+      const ranNum = Math.floor(Math.random() * 16);
+      if (!arr.includes(ranNum)) {
+        arr.push(ranNum);
+      }
+    }
+    return arr;
+  };
+
   return (
     <main className="mx-auto mt-14 font-roboto sm:mt-24 sm:max-w-7xl">
       <section className="mt-10 sm:overflow-hidden sm:rounded">
@@ -35,8 +53,14 @@ const Home: React.FC<Props> = ({ products }) => {
           Suggestions for the day
         </h2>
         <div className="flex-wrap items-center justify-center sm:flex lg:flex-nowrap">
-          {products.map(
-            (product, index) => index < 4 && <SuggestionBox product={product} />
+          {suggested.map(
+            (item) =>
+              products[item] && (
+                <SuggestionBox
+                  product={products[item]}
+                  key={products[item].id}
+                />
+              )
           )}
         </div>
       </section>
