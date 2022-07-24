@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { MenuIcon, ShoppingCartIcon, XIcon } from "@heroicons/react/outline";
 import img from "../../assets/images2/image-avatar.png";
+import { Link } from "react-router-dom";
 
 interface Props {
   user: string;
@@ -23,9 +24,9 @@ const Header: React.FC<Props> = ({ user = "John Doe" }) => {
             onClick={() => toggleSidebar(!isSidebarOpen)}
             className="w-8 h-8 text-gray-700 cursor-pointer md:hidden"
           />
-          <a href="/" className="text-3xl font-semibold text-gray-800">
+          <Link to="/" className="text-3xl font-semibold text-gray-800">
             Bakery
-          </a>
+          </Link>
           <Links location="navbar" />
         </div>
         <div className="flex items-center gap-4 text-gray-800">
@@ -57,19 +58,13 @@ const Links = ({ location }: { location: string }) => (
     }`}
   >
     <li className="cursor-pointer hover:underline">
-      <a href="/">Our products</a>
+      <Link to="/products">Our products</Link>
     </li>
     <li className="cursor-pointer hover:underline">
-      <a href="/">Breads</a>
+      <Link to="/">About</Link>
     </li>
     <li className="cursor-pointer hover:underline">
-      <a href="/">Sweets</a>
-    </li>
-    <li className="cursor-pointer hover:underline">
-      <a href="/">About</a>
-    </li>
-    <li className="cursor-pointer hover:underline">
-      <a href="/">Contact us</a>
+      <Link to="/">Contact us</Link>
     </li>
   </ul>
 );

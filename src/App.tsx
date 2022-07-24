@@ -1,8 +1,12 @@
+//Core
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
+//Components
 import Header from "./components/shared/Header";
 import Footer from "./components/shared/Footer";
 import Home from "./components/home/Home";
+import ProductsPage from "./components/products/ProductsPage";
+//Types
 import { Product } from "./types/Product";
 
 function App() {
@@ -22,6 +26,10 @@ function App() {
       <Header user="John Doe" />
       <Routes>
         <Route path="/" element={<Home products={products} />} />
+        <Route
+          path="/products"
+          element={<ProductsPage products={products} />}
+        />
       </Routes>
       <Footer />
     </>
