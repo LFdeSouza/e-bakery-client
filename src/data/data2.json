@@ -22,7 +22,7 @@
         "url": "../../assets/images/3.jpg",
         "price": 14.50,
         "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, facilis. Magni debitis dolorem quidem nisi minus, iusto vitae incidunt inventore.",
-        "category": "bakery"
+        "category": "pastry"
       },
       {
         "name": "Cinnamon buns",
@@ -46,7 +46,7 @@
         "url": "../../assets/images/6.jpg",
         "price": 5.50,
         "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, facilis. Magni debitis dolorem quidem nisi minus, iusto vitae incidunt inventore.",
-        "category": "bakery"
+        "category": "pastry"
       },
       {
         "name": "Chocolate macarrons",
@@ -54,7 +54,7 @@
         "url": "../../assets/images/7.jpg",
         "price": 2.50,
         "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, facilis. Magni debitis dolorem quidem nisi minus, iusto vitae incidunt inventore.",
-        "category": "bakery"
+        "category": "pastry"
       },
       {
         "name": "Apple pie",

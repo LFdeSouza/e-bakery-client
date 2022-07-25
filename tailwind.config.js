@@ -9,7 +9,8 @@ module.exports = {
       },
       colors:{
         "mainOrange": "#ff7d1a",
-        "paleOrange": "	#ffede0",
+        "paleOrange": "#ffede0",
+        "grayishBlue": "#F7F8FD"
       },
       fontFamily:{
         roboto: "roboto"

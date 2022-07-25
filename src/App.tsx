@@ -6,6 +6,7 @@ import Header from "./components/shared/Header";
 import Footer from "./components/shared/Footer";
 import Home from "./components/home/Home";
 import ProductsPage from "./components/products/ProductsPage";
+import ProductDetails from "./components/products/ProductDetails";
 //Types
 import { Product } from "./types/Product";
 
@@ -30,6 +31,7 @@ function App() {
           path="/products"
           element={<ProductsPage products={products} />}
         />
+        <Route path="/products/:productId" element={<ProductDetails />} />
       </Routes>
       <Footer />
     </>
