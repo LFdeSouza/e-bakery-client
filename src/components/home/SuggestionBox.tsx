@@ -1,4 +1,5 @@
 import { Product } from "../../types/Product";
+import { useNavigate } from "react-router-dom";
 import useImage from "../../hooks/useImage";
 
 interface Props {
@@ -6,9 +7,10 @@ interface Props {
 }
 const SuggestionBox: React.FC<Props> = ({ product }) => {
   const image = useImage(product.id);
+  const navigate = useNavigate();
 
   return (
-    <div className="p-4 ">
+    <div className="p-4" onClick={() => navigate(`/products/${product.id}`)}>
       <div className="relative group">
         <div className="w-auto overflow-hidden rounded-lg h-72 ">
           <img

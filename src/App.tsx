@@ -9,6 +9,7 @@ import ProductsPage from "./components/products/ProductsPage";
 import ProductDetails from "./components/products/ProductDetails";
 //Types
 import { Product } from "./types/Product";
+import About from "./components/about/About";
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -32,6 +33,7 @@ function App() {
           element={<ProductsPage products={products} />}
         />
         <Route path="/products/:productId" element={<ProductDetails />} />
+        <Route path="/about" element={<About />} />
       </Routes>
       <Footer />
     </>

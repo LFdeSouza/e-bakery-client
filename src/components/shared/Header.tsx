@@ -61,7 +61,7 @@ const Links = ({ location }: { location: string }) => (
       <Link to="/products">Our products</Link>
     </li>
     <li className="cursor-pointer hover:underline">
-      <Link to="/">About</Link>
+      <Link to="/about">About</Link>
     </li>
     <li className="cursor-pointer hover:underline">
       <Link to="/">Contact us</Link>
