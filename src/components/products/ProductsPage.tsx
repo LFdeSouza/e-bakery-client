@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
+import { useAppSelector } from "../../store/store";
 import { Product } from "../../types/Product";
 import ProductItem from "./ProductItem";
 
-interface Props {
-  products: Product[];
-}
-const ProductsPage: React.FC<Props> = ({ products }) => {
+const ProductsPage = () => {
+  const products = useAppSelector((state) => state.products.products);
   const [selection, setSelection] = useState("pastry");
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     setFilteredProducts(products.filter((item) => item.category === selection));
-  }, [selection]);
+  }, [selection, products]);
 
   return (
     <main className="mx-auto mt-32 max-w-7xl">

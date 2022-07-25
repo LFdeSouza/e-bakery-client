@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
+import { useAppSelector } from "../../store/store";
+import { useNavigate } from "react-router-dom";
 import img from "../../assets/images2/mixed_breads.jpg";
-import { Product } from "../../types/Product";
 import SuggestionBox from "./SuggestionBox";
 
-interface Props {
-  products: Product[];
-}
-
-const Home: React.FC<Props> = ({ products }) => {
+const Home = () => {
+  const navigate = useNavigate();
+  const products = useAppSelector((state) => state.products.products);
   const [suggested, setSuggested] = useState<number[]>([]);
-
   useEffect(() => {
     setSuggested(generateRandomArr());
   }, []);
@@ -42,7 +40,10 @@ const Home: React.FC<Props> = ({ products }) => {
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
               cupiditate molestias blanditiis.
             </p>
-            <button className="p-2 px-4 mt-2 text-2xl text-white rounded-lg bg-mainOrange hover:bg-orange-600 sm:mt-10">
+            <button
+              onClick={() => navigate("/products")}
+              className="p-2 px-4 mt-2 text-2xl text-white rounded-lg bg-mainOrange hover:bg-orange-600 sm:mt-10"
+            >
               Order now!
             </button>
           </div>
