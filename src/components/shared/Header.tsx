@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { MenuIcon, ShoppingCartIcon, XIcon } from "@heroicons/react/outline";
 import img from "../../assets/images2/image-avatar.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../store/store";
 
 interface Props {
   user: string;
@@ -13,8 +14,12 @@ interface SidebarProps {
 }
 
 const Header: React.FC<Props> = ({ user = "John Doe" }) => {
+  const navigate = useNavigate();
   const [isSidebarOpen, toggleSidebar] = useState(false);
   const [openLogout, setOpenLogout] = useState(false);
+  const itemsInCart = useAppSelector((state) =>
+    state.cart.items.reduce((total, item) => total + item.quantity, 0)
+  );
 
   return (
     <header className="fixed top-0 z-10 w-screen bg-white">
@@ -30,9 +35,13 @@ const Header: React.FC<Props> = ({ user = "John Doe" }) => {
           <Links location="navbar" />
         </div>
         <div className="flex items-center gap-4 text-gray-800">
-          <div className="relative">
-            <ShoppingCartIcon className="w-6 h-6 text-gray-700 cursor-pointer" />
-            <span className="absolute w-4 h-4 bg-red-400 rounded-full top-3 left-3"></span>
+          <div onClick={() => navigate("/cart")} className="relative">
+            <ShoppingCartIcon className="text-gray-700 cursor-pointer h-7 w-7" />
+            {itemsInCart > 0 && (
+              <span className="absolute flex items-center justify-center w-5 h-5 text-white rounded-full -top-3 left-3 bg-mainOrange">
+                {itemsInCart && itemsInCart}
+              </span>
+            )}
           </div>
           <div
             onClick={() => setOpenLogout(!openLogout)}

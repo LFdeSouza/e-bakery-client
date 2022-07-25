@@ -1,9 +1,9 @@
 import useImage from "../../hooks/useImage";
-import { Product } from "../../types/Product";
+import { IProduct } from "../../types/Product";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
-  product: Product;
+  product: IProduct;
 }
 
 const ProductItem: React.FC<Props> = ({ product }) => {
@@ -15,7 +15,7 @@ const ProductItem: React.FC<Props> = ({ product }) => {
       onClick={() => navigate(`/products/${product.id}`)}
       className="p-4 mx-auto cursor-pointer sm:max-w-sm"
     >
-      <div className="overflow-hidden rounded-lg ">
+      <div className="overflow-hidden rounded-lg h- max-h-64">
         <img
           className="object-cover transition-all duration-500 rounded-lg hover:scale-110"
           src={image.image}

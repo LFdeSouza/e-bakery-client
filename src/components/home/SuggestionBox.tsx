@@ -1,9 +1,9 @@
-import { Product } from "../../types/Product";
+import { IProduct } from "../../types/Product";
 import { useNavigate } from "react-router-dom";
 import useImage from "../../hooks/useImage";
 
 interface Props {
-  product: Product;
+  product: IProduct;
 }
 const SuggestionBox: React.FC<Props> = ({ product }) => {
   const image = useImage(product.id);

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../store/store";
-import { Product } from "../../types/Product";
+import { IProduct } from "../../types/Product";
 import ProductItem from "./ProductItem";
 
 const ProductsPage = () => {
   const products = useAppSelector((state) => state.products.products);
   const [selection, setSelection] = useState("pastry");
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
 
   useEffect(() => {
     setFilteredProducts(products.filter((item) => item.category === selection));

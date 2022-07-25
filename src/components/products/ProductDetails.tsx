@@ -1,31 +1,32 @@
-import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useAppSelector, useAppDispatch } from "../../store/store";
 import useImage from "../../hooks/useImage";
-import { Product } from "../../types/Product";
+import {
+  addItemToCart,
+  decrementQuantity,
+  incrementQuantity,
+} from "../../store/cartSlice";
 import { MinusIcon, PlusIcon } from "@heroicons/react/outline";
 
 const ProductDetails = () => {
+  const dispatch = useAppDispatch();
   const { productId } = useParams();
-  const [product, setProduct] = useState<Product>({
-    name: "",
-    id: 0,
-    url: "",
-    price: 0,
-    description: "",
-    category: "",
-  });
-  const image = useImage(product.id);
 
-  const fetchProduct = async () => {
-    const res = await fetch(`http://localhost:3000/products/${productId}`);
-    const data = (await res.json()) as Product;
-    setProduct(data);
-  };
-  useEffect(() => {
-    fetchProduct();
-  }, []);
+  const product = useAppSelector((state) => state.products.products).find(
+    (item) => item.id.toString() === productId
+  );
 
-  return (
+  const quantityInCart = useAppSelector((state) => state.cart.items).find(
+    (item) => item.id.toString() === productId
+  );
+
+  const image = useImage(product?.id);
+
+  return !product ? (
+    <div className="mx-auto mt-32 mb-[40rem] max-w-7xl text-3xl font-semibold text-gray-800">
+      We could not find your request
+    </div>
+  ) : (
     <main className="mx-auto mt-32 mb-80 max-w-7xl">
       <div className="sm:mx-auto sm:flex sm:w-11/12 sm:justify-between sm:gap-4">
         <div className="mx-auto w-11/12 sm:max-w-[35rem] sm:p-5">
@@ -48,15 +49,26 @@ const ProductDetails = () => {
           </p>
           <div className="items-center sm:flex sm:justify-between sm:gap-3">
             <div className="flex items-center justify-between p-4 px-10 mt-3 rounded-lg bg-grayishBlue sm:w-2/5 sm:px-5">
-              <button>
+              <button
+                onClick={() => dispatch(decrementQuantity(Number(productId)))}
+              >
                 <MinusIcon className="w-6 h-6 text-mainOrange" />
               </button>
-              <p className="text-lg font-bold text-gray-800">0</p>
-              <button>
+              <p className="text-lg font-bold text-gray-800">
+                {quantityInCart?.quantity.toString() || "0"}
+              </p>
+              <button
+                onClick={() => dispatch(incrementQuantity(Number(productId)))}
+              >
                 <PlusIcon className="w-6 h-6 text-mainOrange" />
               </button>
             </div>
-            <button className="w-full p-4 mt-4 text-white rounded-lg bg-mainOrange hover:bg-orange-600 sm:w-3/5">
+            <button
+              onClick={() =>
+                dispatch(addItemToCart({ ...product, quantity: 1 }))
+              }
+              className="w-full p-4 mt-4 text-white rounded-lg bg-mainOrange hover:bg-orange-600 sm:w-3/5"
+            >
               Add to Cart
             </button>
           </div>
