@@ -18,7 +18,7 @@ const ProductDetails = () => {
 
   const quantityInCart = useAppSelector((state) => state.cart.items).find(
     (item) => item.id.toString() === productId
-  );
+  )?.quantity;
 
   const image = useImage(product?.id);
 
@@ -55,10 +55,14 @@ const ProductDetails = () => {
                 <MinusIcon className="w-6 h-6 text-mainOrange" />
               </button>
               <p className="text-lg font-bold text-gray-800">
-                {quantityInCart?.quantity.toString() || "0"}
+                {quantityInCart?.toString() || "0"}
               </p>
               <button
-                onClick={() => dispatch(incrementQuantity(Number(productId)))}
+                onClick={() =>
+                  quantityInCart
+                    ? dispatch(incrementQuantity(Number(productId)))
+                    : dispatch(addItemToCart({ ...product, quantity: 1 }))
+                }
               >
                 <PlusIcon className="w-6 h-6 text-mainOrange" />
               </button>

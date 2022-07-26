@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { MenuIcon, ShoppingCartIcon, XIcon } from "@heroicons/react/outline";
-import img from "../../assets/images2/image-avatar.png";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { logout } from "../../store/authSlice";
 import { Link, useNavigate } from "react-router-dom";
-import { useAppSelector } from "../../store/store";
+import { IUser } from "../../types/User";
 
 interface Props {
   user: string;
@@ -13,10 +14,14 @@ interface SidebarProps {
   toggleSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+interface UserProps {
+  user: IUser;
+}
+
 const Header: React.FC<Props> = ({ user = "John Doe" }) => {
   const navigate = useNavigate();
+  const auth = useAppSelector((state) => state.auth);
   const [isSidebarOpen, toggleSidebar] = useState(false);
-  const [openLogout, setOpenLogout] = useState(false);
   const itemsInCart = useAppSelector((state) =>
     state.cart.items.reduce((total, item) => total + item.quantity, 0)
   );
@@ -38,19 +43,13 @@ const Header: React.FC<Props> = ({ user = "John Doe" }) => {
           <div onClick={() => navigate("/cart")} className="relative">
             <ShoppingCartIcon className="text-gray-700 cursor-pointer h-7 w-7" />
             {itemsInCart > 0 && (
-              <span className="absolute flex items-center justify-center w-5 h-5 text-white rounded-full -top-3 left-3 bg-mainOrange">
+              <span className="absolute flex items-center justify-center w-5 h-5 text-sm text-white rounded-full -top-3 left-3 bg-mainOrange">
                 {itemsInCart && itemsInCart}
               </span>
             )}
           </div>
-          <div
-            onClick={() => setOpenLogout(!openLogout)}
-            className="relative flex items-center gap-3 cursor-pointer"
-          >
-            <p>John Doe</p>
-            <img className="w-10 h-10" src={img} alt="Profile" />
-            {openLogout && <LogoutMenu />}
-          </div>
+          {!auth.isAuthenticated && <LoginBar />}
+          {auth.user && <DisplayUser user={auth.user} />}
         </div>
       </div>
       <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
@@ -77,11 +76,45 @@ const Links = ({ location }: { location: string }) => (
     </li>
   </ul>
 );
-const LogoutMenu = () => (
-  <div className="absolute left-0 p-4 px-8 bg-white rounded shadow-lg top-12">
-    <p className="hover:underline ">Logout</p>
-  </div>
-);
+
+const DisplayUser: React.FC<UserProps> = ({ user }) => {
+  const [openLogout, setOpenLogout] = useState(false);
+  const dispatch = useAppDispatch();
+
+  return (
+    <div
+      onClick={() => setOpenLogout(!openLogout)}
+      className="relative flex items-center gap-3 cursor-pointer"
+    >
+      <p>{user.username}</p>
+      <img
+        className="w-10 h-10 rounded-full"
+        src="https://www.gravatar.com/avatar/00000000000000000000000000000000"
+        alt="Profile"
+      />
+      {openLogout && (
+        <div className="absolute left-0 p-4 px-8 bg-white rounded shadow-lg top-12">
+          <p onClick={() => dispatch(logout())} className="hover:underline ">
+            Logout
+          </p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const LoginBar = () => {
+  return (
+    <div className="flex items-center gap-4">
+      <Link className="text-gray-700" to="/login">
+        Login
+      </Link>
+      <Link className="text-gray-700" to="/signup">
+        Signup
+      </Link>
+    </div>
+  );
+};
 
 const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen, toggleSidebar }) => (
   <>
@@ -103,4 +136,5 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen, toggleSidebar }) => (
     </nav>
   </>
 );
+
 export default Header;

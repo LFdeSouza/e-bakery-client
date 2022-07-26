@@ -9,9 +9,13 @@ import ProductsPage from "./components/products/ProductsPage";
 import ProductDetails from "./components/products/ProductDetails";
 import About from "./components/about/About";
 import Cart from "./components/cart/Cart";
+import Signup from "./components/auth/Signup";
+import PrivateRoute from "./components/shared/PrivateRoute";
+import Order from "./components/order/Order";
 //Store
 import { useAppDispatch } from "./store/store";
 import { setProducts } from "./store/productSlice";
+import Login from "./components/auth/Login";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -34,6 +38,11 @@ function App() {
         <Route path="/products/:productId" element={<ProductDetails />} />
         <Route path="/about" element={<About />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/orderCompleted" element={<Order />} />
+        </Route>
       </Routes>
       <Footer />
     </>
