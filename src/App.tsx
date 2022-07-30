@@ -1,6 +1,10 @@
 //Core
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
+//Store
+import { useAppDispatch } from "./store/store";
+import { setProducts } from "./store/productSlice";
+import Login from "./components/auth/Login";
 //Components
 import Header from "./components/shared/Header";
 import Footer from "./components/shared/Footer";
@@ -12,10 +16,6 @@ import Cart from "./components/cart/Cart";
 import Signup from "./components/auth/Signup";
 import PrivateRoute from "./components/shared/PrivateRoute";
 import Order from "./components/order/Order";
-//Store
-import { useAppDispatch } from "./store/store";
-import { setProducts } from "./store/productSlice";
-import Login from "./components/auth/Login";
 
 function App() {
   const dispatch = useAppDispatch();
