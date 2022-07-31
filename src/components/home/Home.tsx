@@ -1,13 +1,20 @@
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../store/store";
 import { useNavigate } from "react-router-dom";
-import img from "../../assets/images2/mixed_breads.jpg";
+import img from "../../assets/images/mixed_breads.jpg";
 import SuggestionBox from "./SuggestionBox";
+import Spinner from "../shared/Spinner";
+import {
+  selectAllProducts,
+  selectProductsLoading,
+} from "../../store/productSlice";
 
 const Home = () => {
   const navigate = useNavigate();
-  const products = useAppSelector((state) => state.products.products);
+  const productsLoading = useAppSelector(selectProductsLoading);
+  const products = useAppSelector(selectAllProducts);
   const [suggested, setSuggested] = useState<number[]>([]);
+
   useEffect(() => {
     setSuggested(generateRandomArr());
   }, []);
@@ -54,14 +61,18 @@ const Home = () => {
           Suggestions for the day
         </h2>
         <div className="flex-wrap items-center justify-center sm:flex lg:flex-nowrap">
-          {suggested.map(
-            (item) =>
-              products[item] && (
-                <SuggestionBox
-                  product={products[item]}
-                  key={products[item].id}
-                />
-              )
+          {productsLoading ? (
+            <Spinner />
+          ) : (
+            suggested.map(
+              (item) =>
+                products[item] && (
+                  <SuggestionBox
+                    product={products[item]}
+                    key={products[item].id}
+                  />
+                )
+            )
           )}
         </div>
       </section>

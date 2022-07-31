@@ -10,3 +10,7 @@ export interface IProduct {
 export interface ICartItem extends IProduct {
   quantity: number;
 }
+
+export interface IProductsResponseApi {
+  products: IProduct[];
+}

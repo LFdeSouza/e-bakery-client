@@ -1,10 +1,10 @@
 //Core
-import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 //Store
-import { useAppDispatch } from "./store/store";
-import { setProducts } from "./store/productSlice";
 import Login from "./components/auth/Login";
+import { useEffect } from "react";
+import { fetchProducts } from "./store/productSlice";
+import { useAppDispatch } from "./store/store";
 //Components
 import Header from "./components/shared/Header";
 import Footer from "./components/shared/Footer";
@@ -19,19 +19,12 @@ import Order from "./components/order/Order";
 
 function App() {
   const dispatch = useAppDispatch();
-
   useEffect(() => {
-    const fetchProducts = async () => {
-      const res = await fetch("http://localhost:3000/products");
-      const data = await res.json();
-      dispatch(setProducts(data));
-    };
-    fetchProducts();
+    dispatch(fetchProducts());
   }, [dispatch]);
-
   return (
     <>
-      <Header user="John Doe" />
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<ProductsPage />} />

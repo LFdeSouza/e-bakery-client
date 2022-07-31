@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { MenuIcon, ShoppingCartIcon, XIcon } from "@heroicons/react/outline";
 import { useAppDispatch, useAppSelector } from "../../store/store";
-import { logout } from "../../store/authSlice";
+import {
+  authenticatedStatus,
+  userData,
+  logoutUser,
+} from "../../store/authSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { IUser } from "../../types/User";
 
@@ -18,9 +22,10 @@ interface UserProps {
   user: IUser;
 }
 
-const Header: React.FC<Props> = ({ user = "John Doe" }) => {
+const Header = () => {
   const navigate = useNavigate();
-  const auth = useAppSelector((state) => state.auth);
+  const isAuthenticated = useAppSelector(authenticatedStatus);
+  const user = useAppSelector(userData);
   const [isSidebarOpen, toggleSidebar] = useState(false);
   const itemsInCart = useAppSelector((state) =>
     state.cart.items.reduce((total, item) => total + item.quantity, 0)
@@ -48,8 +53,8 @@ const Header: React.FC<Props> = ({ user = "John Doe" }) => {
               </span>
             )}
           </div>
-          {!auth.isAuthenticated && <LoginBar />}
-          {auth.user && <DisplayUser user={auth.user} />}
+          {!isAuthenticated && <LoginBar />}
+          {user && <DisplayUser user={user} />}
         </div>
       </div>
       <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
@@ -94,7 +99,10 @@ const DisplayUser: React.FC<UserProps> = ({ user }) => {
       />
       {openLogout && (
         <div className="absolute left-0 p-4 px-8 bg-white rounded shadow-lg top-12">
-          <p onClick={() => dispatch(logout())} className="hover:underline ">
+          <p
+            onClick={() => dispatch(logoutUser())}
+            className="hover:underline "
+          >
             Logout
           </p>
         </div>

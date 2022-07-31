@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useAppDispatch } from "../../store/store";
-import { setUser } from "../../store/authSlice";
-import { IUser } from "../../types/User";
+// import { setUser } from "../../store/authSlice";
+import { registerUser } from "../../store/authSlice";
+import { IUserData } from "../../types/User";
 
 const Signup = () => {
   const dispatch = useAppDispatch();
-  const [userData, setUserData] = useState<IUser>({
+  const [userData, setUserData] = useState<IUserData>({
     username: "",
     password: "",
-    id: Math.random().toString(),
   });
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
@@ -21,7 +21,7 @@ const Signup = () => {
       setInvalidInput(true);
       return;
     }
-    dispatch(setUser(userData));
+    dispatch(registerUser(userData));
     clearForm();
   };
 
@@ -29,7 +29,6 @@ const Signup = () => {
     setUserData({
       username: "",
       password: "",
-      id: Math.random().toString(),
     });
     setPasswordConfirmation("");
   };
@@ -56,7 +55,7 @@ const Signup = () => {
             }
             value={userData.username}
             type="text"
-            className="w-full rounded-lg border border-gray-400 p-1.5 px-4"
+            className="w-full p-2 px-4 border border-gray-400 rounded-lg"
             placeholder="Username"
           />
         </div>
@@ -71,7 +70,7 @@ const Signup = () => {
             }
             type="password"
             value={userData.password}
-            className="w-full rounded-lg border border-gray-400 p-1.5 px-4"
+            className="w-full p-2 px-4 border border-gray-400 rounded-lg"
             placeholder="Password"
           />
         </div>
@@ -89,8 +88,8 @@ const Signup = () => {
             }
             type="password"
             value={passwordConfirmation}
-            className="w-full rounded-lg border border-gray-400 p-1.5 px-4"
-            placeholder="passwordConfirmation"
+            className="w-full p-2 px-4 border border-gray-400 rounded-lg"
+            placeholder="password"
           />
         </div>
         <button

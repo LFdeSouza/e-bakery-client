@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
+import {
+  selectAllProducts,
+  selectProductsLoading,
+} from "../../store/productSlice";
 import { useAppSelector } from "../../store/store";
 import { IProduct } from "../../types/Product";
+import Spinner from "../shared/Spinner";
 import ProductItem from "./ProductItem";
 
 const ProductsPage = () => {
-  const products = useAppSelector((state) => state.products.products);
+  const products = useAppSelector(selectAllProducts);
+  const productsLoading = useAppSelector(selectProductsLoading);
   const [selection, setSelection] = useState("pastry");
   const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
 
@@ -32,11 +38,15 @@ const ProductsPage = () => {
           Bakery
         </button>
       </div>
-      <section className="flex flex-wrap">
-        {filteredProducts.map((item) => (
-          <ProductItem product={item} key={item.id} />
-        ))}
-      </section>
+      {productsLoading ? (
+        <Spinner />
+      ) : (
+        <section className="flex flex-wrap">
+          {filteredProducts.map((item) => (
+            <ProductItem product={item} key={item.id} />
+          ))}
+        </section>
+      )}
     </main>
   );
 };

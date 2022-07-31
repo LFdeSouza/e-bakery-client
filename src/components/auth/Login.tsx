@@ -1,16 +1,21 @@
 import { useState } from "react";
+import { useAppDispatch } from "../../store/store";
+import { loginUser } from "../../store/authSlice";
 
 const Login = () => {
+  const dispatch = useAppDispatch();
   const [userData, setUserData] = useState({
     username: "",
     password: "",
-    passwordConfirmation: "",
   });
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(userData);
+    dispatch(loginUser(userData));
+    clearFields();
   };
+
+  const clearFields = () => setUserData({ username: "", password: "" });
   return (
     <div className="mx-auto mt-36 flex min-h-[70vh] max-w-7xl flex-col px-28">
       <form onSubmit={onSubmit} className="w-1/2 mx-auto">
@@ -28,7 +33,7 @@ const Login = () => {
             }
             value={userData.username}
             type="text"
-            className="w-full rounded-lg border border-gray-400 p-1.5 px-4"
+            className="w-full p-2 px-4 border border-gray-400 rounded-lg"
             placeholder="Username"
           />
         </div>
@@ -41,30 +46,13 @@ const Login = () => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setUserData({ ...userData, password: e.target.value })
             }
-            type="text"
+            type="password"
             value={userData.password}
-            className="w-full rounded-lg border border-gray-400 p-1.5 px-4"
+            className="w-full p-2 px-4 border border-gray-400 rounded-lg"
             placeholder="Password"
           />
         </div>
-        <div className="flex flex-col w-full mb- ">
-          <label
-            htmlFor="passwordConfirmation"
-            className="text-lg text-gray-800"
-          >
-            Confirm password
-          </label>
-          <input
-            id="passwordConfirmation"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setUserData({ ...userData, passwordConfirmation: e.target.value })
-            }
-            type="text"
-            value={userData.passwordConfirmation}
-            className="w-full rounded-lg border border-gray-400 p-1.5 px-4"
-            placeholder="passwordConfirmation"
-          />
-        </div>
+
         <button
           type="submit"
           className="w-full p-2 px-4 mt-5 text-white rounded-lg bg-mainOrange hover:bg-orange-600"

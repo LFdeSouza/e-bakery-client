@@ -1,19 +1,18 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IProduct } from "../types/Product";
-import { RootState } from "./store";
+import axios from "axios";
+import { IProduct, IProductsResponseApi } from "../types/Product";
+import { RootState, store } from "./store";
 
 // Define a type for the slice state
 interface ProductsState {
   products: IProduct[];
-  status: string;
-  error: any;
+  isLoading: boolean;
 }
 
 // Define the initial state using that type
 const initialState: ProductsState = {
   products: [],
-  status: "idle",
-  error: null,
+  isLoading: false,
 };
 
 const productsSlice = createSlice({
@@ -22,39 +21,36 @@ const productsSlice = createSlice({
   initialState,
   reducers: {
     // Use the PayloadAction type to declare the contents of `action.payload`
+    setLoading: (state) => {
+      state.isLoading = true;
+    },
     setProducts: (state, action: PayloadAction<IProduct[]>) => {
+      state.isLoading = false;
       state.products = action.payload;
     },
   },
-  extraReducers(builder) {
-    builder
-      .addCase(fetchProducts.pending, (state, action) => {
-        state.status = "loading";
-      })
-      .addCase(fetchProducts.fulfilled, (state, action) => {
-        state.status = "succeded";
-        state.products = state.products.concat(action.payload);
-      })
-      .addCase(fetchProducts.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      });
-  },
 });
+
+export const { setProducts } = productsSlice.actions;
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async () => {
-    const res = await fetch("http://localhost:3000/products");
-    const data = await res.json();
-    return data;
+    try {
+      const res = (await (
+        await axios.get("/api/products")
+      ).data) as IProductsResponseApi;
+      store.dispatch(setProducts(res.products));
+    } catch (err) {
+      console.log(err);
+    }
   }
 );
 
-export const { setProducts } = productsSlice.actions;
-
 export default productsSlice.reducer;
 
+export const selectProductsLoading = (state: RootState) =>
+  state.products.isLoading;
 export const selectAllProducts = (state: RootState) => state.products.products;
 
 export const selectProductById = (state: RootState, productId: number) =>
