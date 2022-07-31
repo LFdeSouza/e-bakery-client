@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { useAppDispatch } from "../../store/store";
-import { loginUser } from "../../store/authSlice";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { loginUser, userError } from "../../store/authSlice";
+import Alert from "./Alert";
 
 const Login = () => {
   const dispatch = useAppDispatch();
+  const hasError = useAppSelector(userError);
   const [userData, setUserData] = useState({
     username: "",
     password: "",
@@ -18,6 +20,7 @@ const Login = () => {
   const clearFields = () => setUserData({ username: "", password: "" });
   return (
     <div className="mx-auto mt-36 flex min-h-[70vh] max-w-7xl flex-col px-28">
+      {hasError && <Alert msg={hasError} />}
       <form onSubmit={onSubmit} className="w-1/2 mx-auto">
         <h2 className="mb-10 text-3xl font-semibold text-mainOrange">
           Sign up

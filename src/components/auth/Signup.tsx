@@ -1,24 +1,24 @@
 import React, { useState } from "react";
-import { useAppDispatch } from "../../store/store";
+import { useAppDispatch, useAppSelector } from "../../store/store";
 // import { setUser } from "../../store/authSlice";
-import { registerUser } from "../../store/authSlice";
+import { registerUser, setError, userError } from "../../store/authSlice";
 import { IUserData } from "../../types/User";
+import Alert from "./Alert";
 
 const Signup = () => {
   const dispatch = useAppDispatch();
+  const hasError = useAppSelector(userError);
   const [userData, setUserData] = useState<IUserData>({
     username: "",
     password: "",
   });
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
-  const [invalidInput, setInvalidInput] = useState(false);
-
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!userData.username || !userData.password) return;
     if (userData.password !== passwordConfirmation) {
-      setInvalidInput(true);
+      dispatch(setError("Passwords must match"));
       return;
     }
     dispatch(registerUser(userData));
@@ -35,11 +35,7 @@ const Signup = () => {
 
   return (
     <div className=" mx-auto mt-36 flex min-h-[70vh] max-w-7xl flex-col px-28">
-      {invalidInput && (
-        <div className="top-0 p-2 mb-4 text-center text-white bg-orange-700 rounded-lg">
-          Password must match
-        </div>
-      )}
+      {hasError && <Alert msg={hasError} />}
       <form onSubmit={onSubmit} className="w-1/2 mx-auto">
         <h2 className="mb-10 text-3xl font-semibold text-mainOrange">
           Sign up
