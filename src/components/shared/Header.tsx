@@ -9,10 +9,6 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { IUser } from "../../types/User";
 
-interface Props {
-  user: string;
-}
-
 interface SidebarProps {
   isSidebarOpen: boolean;
   toggleSidebar: React.Dispatch<React.SetStateAction<boolean>>;

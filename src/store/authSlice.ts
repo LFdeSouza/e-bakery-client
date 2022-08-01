@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 import { IUser, IResponseLoadUser } from "../types/User";
-import { emptyCart, fillCart } from "./cartSlice";
+import { emptyCart, fillCart, syncOrders } from "./cartSlice";
 import { RootState, store } from "./store";
 
 interface AuthState {
@@ -51,7 +51,7 @@ export const loadUser = createAsyncThunk("auth/loadUser", async () => {
       .data as IResponseLoadUser;
     const { id, username, orders } = res.user;
     store.dispatch(setUser({ id, username }));
-    store.dispatch(fillCart(orders));
+    store.dispatch(syncOrders({ orders, userId: id }));
   } catch (err) {
     if (err instanceof AxiosError) {
       console.log(err.response?.data.msg);
@@ -69,7 +69,7 @@ export const registerUser = createAsyncThunk(
       const res = (await axios.post("/api/users", userData))
         .data as IResponseLoadUser;
 
-      const { id, username, orders } = res.user;
+      const { id, username } = res.user;
       store.dispatch(setUser({ id, username }));
     } catch (err) {
       if (err instanceof AxiosError) {
@@ -92,7 +92,7 @@ export const loginUser = createAsyncThunk(
         .data as IResponseLoadUser;
       const { id, username, orders } = res.user;
       store.dispatch(setUser({ id, username }));
-      store.dispatch(fillCart(orders));
+      store.dispatch(syncOrders({ orders, userId: id }));
     } catch (err) {
       if (err instanceof AxiosError) {
         store.dispatch(setError(err.response?.data.msg));

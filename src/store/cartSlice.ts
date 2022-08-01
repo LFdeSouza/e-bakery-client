@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 import { ICartItem, INewOrder } from "../types/Product";
 import { store, RootState } from "./store";
-
+import { v4 as uuid } from "uuid";
 interface cartState {
   items: ICartItem[];
 }
@@ -68,6 +68,15 @@ export const placeOrder = createAsyncThunk(
         const res = await axios.post("/api/orders", order);
         const newOrder = res.data.newOrder as ICartItem;
         store.dispatch(addToCart(newOrder));
+      } else {
+        //check if item is already in cart
+        if (findOrder(order.productId)) return;
+
+        const product = findProduct(order.productId);
+        if (product) {
+          const newOrder = { id: uuid(), quantity: 1, product };
+          store.dispatch(addToCart(newOrder));
+        }
       }
     } catch (err) {
       if (err instanceof AxiosError) {
@@ -80,10 +89,20 @@ export const placeOrder = createAsyncThunk(
 
 export const updateOrder = createAsyncThunk(
   "cart/update",
-  async ({ orderId, operation }: { orderId: string; operation: string }) => {
+  async ({
+    orderId,
+    operation,
+    userId,
+  }: {
+    orderId: string;
+    operation: string;
+    userId: string | undefined;
+  }) => {
     try {
-      const body = { operation };
-      await axios.put(`/api/orders/${orderId}`, body);
+      if (userId) {
+        const body = { operation };
+        await axios.put(`/api/orders/${orderId}`, body);
+      }
       operation === "increment"
         ? store.dispatch(incrementQuantity(orderId))
         : store.dispatch(decrementQuantity(orderId));
@@ -98,9 +117,17 @@ export const updateOrder = createAsyncThunk(
 
 export const removeOrder = createAsyncThunk(
   "cart/removeOrder",
-  async (orderId: string) => {
+  async ({
+    orderId,
+    userId,
+  }: {
+    orderId: string;
+    userId: string | undefined;
+  }) => {
     try {
-      await axios.delete(`/api/orders/${orderId}`);
+      if (userId) {
+        await axios.delete(`/api/orders/${orderId}`);
+      }
       store.dispatch(removeFromCart(orderId));
     } catch (err) {
       if (err instanceof AxiosError) {
@@ -110,6 +137,47 @@ export const removeOrder = createAsyncThunk(
     }
   }
 );
+
+export const confirmOrder = createAsyncThunk("cart/confirm", async () => {
+  try {
+    await axios.delete("/api/orders");
+    store.dispatch(emptyCart());
+  } catch (err) {
+    if (err instanceof AxiosError) {
+      console.log(err.response?.data.msg);
+    }
+    console.log(err);
+  }
+});
+
+export const syncOrders = createAsyncThunk(
+  "cart/syncOrders",
+  async ({ orders, userId }: { orders: ICartItem[]; userId: string }) => {
+    const currentCart = selectCurrentCart();
+    //If there is anything in local cart, empty cart from db upon login and fill it with local orders
+    if (currentCart.length) {
+      const data = { orders: currentCart, userId };
+      //clear cart
+      await axios.delete("/api/orders");
+      //Fill with local orders
+      const cart = await (
+        await axios.post("/api/orders/syncOrders", data)
+      ).data;
+      store.dispatch(fillCart(cart));
+    }
+    store.dispatch(fillCart(orders));
+  }
+);
+
+const selectCurrentCart = () => store.getState().cart.items;
+
+const findOrder = (productId: number) =>
+  store.getState().cart.items.find((item) => item.product.id === productId);
+
+const findProduct = (productId: number) =>
+  store
+    .getState()
+    .products.products.find((product) => product.id === productId);
 
 export default cartSlice.reducer;
 

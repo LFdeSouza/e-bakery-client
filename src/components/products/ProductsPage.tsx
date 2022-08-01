@@ -11,7 +11,7 @@ import ProductItem from "./ProductItem";
 const ProductsPage = () => {
   const products = useAppSelector(selectAllProducts);
   const productsLoading = useAppSelector(selectProductsLoading);
-  const [selection, setSelection] = useState("pastry");
+  const [selection, setSelection] = useState("bakery");
   const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
 
   useEffect(() => {
@@ -22,20 +22,20 @@ const ProductsPage = () => {
     <main className="mx-auto mt-32 max-w-7xl">
       <div className="flex items-center mb-10">
         <button
-          onClick={() => setSelection("pastry")}
-          className={`${
-            selection === "pastry" && "underline"
-          } ml-10 rounded-lg text-xl font-semibold text-gray-800 hover:underline`}
-        >
-          Pastry
-        </button>
-        <button
           onClick={() => setSelection("bakery")}
           className={`${
             selection === "bakery" && "underline"
           } ml-10 rounded-lg text-xl font-semibold text-gray-800 hover:underline`}
         >
           Bakery
+        </button>
+        <button
+          onClick={() => setSelection("pastry")}
+          className={`${
+            selection === "pastry" && "underline"
+          } ml-10 rounded-lg text-xl font-semibold text-gray-800 hover:underline`}
+        >
+          Pastry
         </button>
       </div>
       {productsLoading ? (

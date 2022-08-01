@@ -55,7 +55,11 @@ const ProductDetails = () => {
                 onClick={() => {
                   order &&
                     dispatch(
-                      updateOrder({ orderId: order.id, operation: "decrement" })
+                      updateOrder({
+                        orderId: order.id,
+                        operation: "decrement",
+                        userId,
+                      })
                     );
                 }}
               >
@@ -71,6 +75,7 @@ const ProductDetails = () => {
                         updateOrder({
                           orderId: order.id,
                           operation: "increment",
+                          userId,
                         })
                       )
                     : dispatch(placeOrder({ productId: product.id, userId }))
@@ -81,9 +86,7 @@ const ProductDetails = () => {
             </div>
             <button
               onClick={() => {
-                userId &&
-                  productId &&
-                  dispatch(placeOrder({ userId, productId }));
+                dispatch(placeOrder({ userId, productId }));
               }}
               className="w-full p-4 mt-4 text-white rounded-lg bg-mainOrange hover:bg-orange-600 sm:w-3/5"
             >

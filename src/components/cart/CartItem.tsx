@@ -1,9 +1,10 @@
 import React from "react";
 import { updateOrder, removeOrder } from "../../store/cartSlice";
-import { useAppDispatch } from "../../store/store";
+import { useAppDispatch, useAppSelector } from "../../store/store";
 import useImage from "../../hooks/useImage";
 import { ICartItem } from "../../types/Product";
 import { MinusIcon, PlusIcon } from "@heroicons/react/outline";
+import { selectUser } from "../../store/authSlice";
 
 interface Props {
   item: ICartItem;
@@ -11,6 +12,7 @@ interface Props {
 
 const CartItem: React.FC<Props> = ({ item }) => {
   const dispatch = useAppDispatch();
+  const userId = useAppSelector(selectUser)?.id;
   const image = useImage(item.product.id).image;
   const calculatedPrice = item.product.price * item.quantity;
 
@@ -34,6 +36,7 @@ const CartItem: React.FC<Props> = ({ item }) => {
                   updateOrder({
                     orderId: item.id,
                     operation: "decrement",
+                    userId,
                   })
                 )
               }
@@ -47,6 +50,7 @@ const CartItem: React.FC<Props> = ({ item }) => {
                   updateOrder({
                     orderId: item.id,
                     operation: "increment",
+                    userId,
                   })
                 )
               }
@@ -57,7 +61,7 @@ const CartItem: React.FC<Props> = ({ item }) => {
         </div>
 
         <button
-          onClick={() => dispatch(removeOrder(item.id))}
+          onClick={() => dispatch(removeOrder({ orderId: item.id, userId }))}
           className="w-full px-4 py-3 text-white rounded-lg bg-mainOrange hover:bg-orange-600"
         >
           Remove from cart
