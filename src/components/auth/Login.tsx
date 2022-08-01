@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/store";
+import { useNavigate } from "react-router-dom";
 import { loginUser, userError } from "../../store/authSlice";
 import Alert from "./Alert";
 
 const Login = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const hasError = useAppSelector(userError);
   const [userData, setUserData] = useState({

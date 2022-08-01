@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  incrementQuantity,
-  decrementQuantity,
-  updateOrderFromDB,
-  removeOrderFromDB,
-} from "../../store/cartSlice";
+import { updateOrder, removeOrder } from "../../store/cartSlice";
 import { useAppDispatch } from "../../store/store";
 import useImage from "../../hooks/useImage";
 import { ICartItem } from "../../types/Product";
@@ -36,7 +31,7 @@ const CartItem: React.FC<Props> = ({ item }) => {
             <button
               onClick={() =>
                 dispatch(
-                  updateOrderFromDB({
+                  updateOrder({
                     orderId: item.id,
                     operation: "decrement",
                   })
@@ -49,7 +44,7 @@ const CartItem: React.FC<Props> = ({ item }) => {
             <button
               onClick={() =>
                 dispatch(
-                  updateOrderFromDB({
+                  updateOrder({
                     orderId: item.id,
                     operation: "increment",
                   })
@@ -62,7 +57,7 @@ const CartItem: React.FC<Props> = ({ item }) => {
         </div>
 
         <button
-          onClick={() => dispatch(removeOrderFromDB(item.id))}
+          onClick={() => dispatch(removeOrder(item.id))}
           className="w-full px-4 py-3 text-white rounded-lg bg-mainOrange hover:bg-orange-600"
         >
           Remove from cart

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 import { IUser, IResponseLoadUser } from "../types/User";
-import { fillCart } from "./cartSlice";
+import { emptyCart, fillCart } from "./cartSlice";
 import { RootState, store } from "./store";
 
 interface AuthState {
@@ -110,6 +110,7 @@ export const logoutUser = createAsyncThunk("auth/logout", async () => {
   try {
     await axios.post("/api/users/logout");
     store.dispatch(logout());
+    store.dispatch(emptyCart());
   } catch (err) {
     if (err instanceof AxiosError) {
       console.log(err.response?.data.msg);

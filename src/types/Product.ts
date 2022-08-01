@@ -18,6 +18,6 @@ export interface IFetchProductsApiResponse {
 }
 
 export interface INewOrder {
-  userId: string;
+  userId: string | undefined;
   productId: number;
 }

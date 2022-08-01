@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 import { ICartItem, INewOrder } from "../types/Product";
-import { selectProductById } from "./productSlice";
-import { store, RootState, useAppSelector } from "./store";
+import { store, RootState } from "./store";
 
 interface cartState {
   items: ICartItem[];
@@ -46,6 +45,9 @@ const cartSlice = createSlice({
           : item.quantity--;
       }
     },
+    emptyCart: (state) => {
+      state.items = [];
+    },
   },
 });
 
@@ -55,15 +57,18 @@ export const {
   decrementQuantity,
   removeFromCart,
   fillCart,
+  emptyCart,
 } = cartSlice.actions;
 
-export const placeOrderToDB = createAsyncThunk(
+export const placeOrder = createAsyncThunk(
   "cart/addToCart",
   async (order: INewOrder) => {
     try {
-      const res = await axios.post("/api/orders", order);
-      const newOrder = res.data.newOrder as ICartItem;
-      store.dispatch(addToCart(newOrder));
+      if (order.userId) {
+        const res = await axios.post("/api/orders", order);
+        const newOrder = res.data.newOrder as ICartItem;
+        store.dispatch(addToCart(newOrder));
+      }
     } catch (err) {
       if (err instanceof AxiosError) {
         console.log(err.response?.data.msg);
@@ -73,7 +78,7 @@ export const placeOrderToDB = createAsyncThunk(
   }
 );
 
-export const updateOrderFromDB = createAsyncThunk(
+export const updateOrder = createAsyncThunk(
   "cart/update",
   async ({ orderId, operation }: { orderId: string; operation: string }) => {
     try {
@@ -91,7 +96,7 @@ export const updateOrderFromDB = createAsyncThunk(
   }
 );
 
-export const removeOrderFromDB = createAsyncThunk(
+export const removeOrder = createAsyncThunk(
   "cart/removeOrder",
   async (orderId: string) => {
     try {
@@ -107,3 +112,6 @@ export const removeOrderFromDB = createAsyncThunk(
 );
 
 export default cartSlice.reducer;
+
+export const selectOrderByProductId = (state: RootState, productId: number) =>
+  state.cart.items.find((item) => item.product.id === productId);

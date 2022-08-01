@@ -2,9 +2,9 @@ import { useParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../store/store";
 import useImage from "../../hooks/useImage";
 import {
-  decrementQuantity,
-  placeOrderToDB,
-  updateOrderFromDB,
+  placeOrder,
+  selectOrderByProductId,
+  updateOrder,
 } from "../../store/cartSlice";
 import { MinusIcon, PlusIcon } from "@heroicons/react/outline";
 import { userData } from "../../store/authSlice";
@@ -16,14 +16,13 @@ const ProductDetails = () => {
   const params = useParams<{ productId: string }>();
   const productId = Number(params.productId);
   const userId = useAppSelector(userData)?.id;
+  const order = useAppSelector((state) =>
+    selectOrderByProductId(state, productId)
+  );
 
   const product = useAppSelector((state) =>
     selectProductById(state, productId)
   );
-
-  const quantityInCart = useAppSelector((state) => state.cart.items).find(
-    (item) => item.product.id === productId
-  )?.quantity;
 
   const image = useImage(product?.id);
 
@@ -54,17 +53,29 @@ const ProductDetails = () => {
           </p>
           <div className="items-center sm:flex sm:justify-between sm:gap-3">
             <div className="flex items-center justify-between p-4 px-10 mt-3 rounded-lg bg-grayishBlue sm:w-2/5 sm:px-5">
-              <button onClick={() => {}}>
+              <button
+                onClick={() => {
+                  order &&
+                    dispatch(
+                      updateOrder({ orderId: order.id, operation: "decrement" })
+                    );
+                }}
+              >
                 <MinusIcon className="w-6 h-6 text-mainOrange" />
               </button>
               <p className="text-lg font-bold text-gray-800">
-                {quantityInCart?.toString() || "0"}
+                {order?.quantity.toString() || "0"}
               </p>
               <button
-                onClick={
-                  () => quantityInCart
-                  // ? dispatch(incrementQuantity(Number(productId)))
-                  // : dispatch(addToCart({ ...product, quantity: 1 }))
+                onClick={() =>
+                  order
+                    ? dispatch(
+                        updateOrder({
+                          orderId: order.id,
+                          operation: "increment",
+                        })
+                      )
+                    : dispatch(placeOrder({ productId: product.id, userId }))
                 }
               >
                 <PlusIcon className="w-6 h-6 text-mainOrange" />
@@ -74,7 +85,7 @@ const ProductDetails = () => {
               onClick={() => {
                 userId &&
                   productId &&
-                  dispatch(placeOrderToDB({ userId, productId }));
+                  dispatch(placeOrder({ userId, productId }));
               }}
               className="w-full p-4 mt-4 text-white rounded-lg bg-mainOrange hover:bg-orange-600 sm:w-3/5"
             >
