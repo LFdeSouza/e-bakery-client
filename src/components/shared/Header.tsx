@@ -3,7 +3,7 @@ import { MenuIcon, ShoppingCartIcon, XIcon } from "@heroicons/react/outline";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import {
   authenticatedStatus,
-  userData,
+  selectUser,
   logoutUser,
 } from "../../store/authSlice";
 import { Link, useNavigate } from "react-router-dom";
@@ -25,7 +25,7 @@ interface UserProps {
 const Header = () => {
   const navigate = useNavigate();
   const isAuthenticated = useAppSelector(authenticatedStatus);
-  const user = useAppSelector(userData);
+  const user = useAppSelector(selectUser);
   const [isSidebarOpen, toggleSidebar] = useState(false);
   const itemsInCart = useAppSelector((state) =>
     state.cart.items.reduce((total, item) => total + item.quantity, 0)

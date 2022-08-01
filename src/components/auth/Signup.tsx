@@ -1,13 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store/store";
-// import { setUser } from "../../store/authSlice";
+import { selectUser } from "../../store/authSlice";
 import { registerUser, setError, userError } from "../../store/authSlice";
 import { IUserData } from "../../types/User";
 import Alert from "./Alert";
 
 const Signup = () => {
+  const navigate = useNavigate();
+  const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
   const hasError = useAppSelector(userError);
+
+  //navigate to home page on user load
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  });
+
   const [userData, setUserData] = useState<IUserData>({
     username: "",
     password: "",

@@ -7,7 +7,7 @@ import {
   updateOrder,
 } from "../../store/cartSlice";
 import { MinusIcon, PlusIcon } from "@heroicons/react/outline";
-import { userData } from "../../store/authSlice";
+import { selectUser } from "../../store/authSlice";
 import { selectProductById } from "../../store/productSlice";
 
 const ProductDetails = () => {
@@ -15,15 +15,13 @@ const ProductDetails = () => {
 
   const params = useParams<{ productId: string }>();
   const productId = Number(params.productId);
-  const userId = useAppSelector(userData)?.id;
+  const userId = useAppSelector(selectUser)?.id;
   const order = useAppSelector((state) =>
     selectOrderByProductId(state, productId)
   );
-
   const product = useAppSelector((state) =>
     selectProductById(state, productId)
   );
-
   const image = useImage(product?.id);
 
   return !product ? (

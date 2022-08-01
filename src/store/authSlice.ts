@@ -66,12 +66,10 @@ export const registerUser = createAsyncThunk(
   async (userData: { username: string; password: string }) => {
     try {
       store.dispatch(setLoading());
-      const res = (await axios.post(
-        "/api/users",
-        userData
-      )) as IResponseLoadUser;
+      const res = (await axios.post("/api/users", userData))
+        .data as IResponseLoadUser;
 
-      const { id, username } = res.user;
+      const { id, username, orders } = res.user;
       store.dispatch(setUser({ id, username }));
     } catch (err) {
       if (err instanceof AxiosError) {
@@ -126,5 +124,5 @@ export default authSlice.reducer;
 export const isLoading = (state: RootState) => state.auth.isLoading;
 export const authenticatedStatus = (state: RootState) =>
   state.auth.isAuthenticated;
-export const userData = (state: RootState) => state.auth.user;
+export const selectUser = (state: RootState) => state.auth.user;
 export const userError = (state: RootState) => state.auth.error;

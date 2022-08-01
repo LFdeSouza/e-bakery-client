@@ -1,13 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { useNavigate } from "react-router-dom";
-import { loginUser, userError } from "../../store/authSlice";
+import { loginUser, selectUser, userError } from "../../store/authSlice";
 import Alert from "./Alert";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const user = useAppSelector(selectUser);
   const hasError = useAppSelector(userError);
+
+  //navigate to home page on user load
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  });
+
   const [userData, setUserData] = useState({
     username: "",
     password: "",
