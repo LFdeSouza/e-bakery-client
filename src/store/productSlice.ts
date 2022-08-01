@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { IProduct, IProductsResponseApi } from "../types/Product";
+import { IProduct, IFetchProductsApiResponse } from "../types/Product";
 import { RootState, store } from "./store";
 
 // Define a type for the slice state
@@ -39,7 +39,7 @@ export const fetchProducts = createAsyncThunk(
     try {
       const res = (await (
         await axios.get("/api/products")
-      ).data) as IProductsResponseApi;
+      ).data) as IFetchProductsApiResponse;
       store.dispatch(setProducts(res.products));
     } catch (err) {
       console.log(err);

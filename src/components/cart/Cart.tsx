@@ -7,7 +7,7 @@ const Cart = () => {
   const user = useAppSelector((state) => state.auth);
   const cartItems = useAppSelector((state) => state.cart.items);
   const total = cartItems.reduce(
-    (total, item) => item.price * item.quantity + total,
+    (total, item) => item.product.price * item.quantity + total,
     0
   );
 

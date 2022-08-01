@@ -7,10 +7,17 @@ export interface IProduct {
   category: string;
 }
 
-export interface ICartItem extends IProduct {
+export interface ICartItem {
+  id: string;
   quantity: number;
+  product: IProduct;
 }
 
-export interface IProductsResponseApi {
+export interface IFetchProductsApiResponse {
   products: IProduct[];
+}
+
+export interface INewOrder {
+  userId: string;
+  productId: number;
 }

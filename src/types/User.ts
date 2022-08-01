@@ -1,4 +1,4 @@
-import { IProduct } from "./Product";
+import { ICartItem } from "./Product";
 
 export interface IUser {
   id: string;
@@ -11,5 +11,5 @@ export interface IUserData {
 }
 
 export interface IResponseLoadUser {
-  user: { id: string; username: string; orders: IProduct[] };
+  user: { id: string; username: string; orders: ICartItem[] };
 }
